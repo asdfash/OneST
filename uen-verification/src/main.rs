@@ -1,12 +1,12 @@
 mod verify;
-use eframe::egui::{self,Color32, RichText};
+use eframe::egui::{self, Color32, RichText};
 use verify::verify;
 // Handles UI
 pub fn main() {
     // change result text colours here
     let verified_color = Color32::GREEN;
-    let unverified_color =  Color32::WHITE;
-    
+    let unverified_color = Color32::WHITE;
+
     // change verbosity here
     let verbose = true;
     //prepare a simple UI
@@ -14,7 +14,7 @@ pub fn main() {
         viewport: egui::ViewportBuilder::default().with_inner_size([320.0, 240.0]),
         ..Default::default()
     };
-    let mut uen= "".to_owned();
+    let mut uen = "".to_owned();
     let mut message = "".to_string();
     let mut verified = false;
     // Our application state:
@@ -27,29 +27,26 @@ pub fn main() {
                 ui.text_edit_singleline(&mut uen).labelled_by(name_label.id);
             });
             ui.label(" ");
-            
+
             if ui.button("Enter").clicked() {
                 //send data to verify function
-                (message,verified) = verify(uen.clone());
+                (message, verified) = verify(uen.clone());
             }
-            let result_text:String;
-            let result_colour:Color32;
-            
-            if verified{
+            let result_text: String;
+            let result_colour: Color32;
+
+            if verified {
                 result_colour = verified_color;
-                if verbose{
+                if verbose {
                     result_text = message.to_owned();
-                }
-                else{
+                } else {
                     result_text = "verified".to_string();
                 }
-            }
-            else {
+            } else {
                 result_colour = unverified_color;
-                if verbose{
+                if verbose {
                     result_text = message.to_owned();
-                }
-                else{
+                } else {
                     result_text = "invalid UEN".to_string();
                 }
             }
@@ -58,4 +55,3 @@ pub fn main() {
         });
     });
 }
-
